@@ -170,4 +170,16 @@ class Futsal extends CI_Controller {
 		}
 	}
 
+	public function jadwalFutsal()
+	{
+		if(empty($this->session->userdata('id_futsal'))){
+			redirect('../indexFutsal');}
+		else {
+			$id=$this->session->userdata('id_futsal');
+			$data['futsal']=$this->Futsal_model->data_futsal($id);
+			$this->load->view('futsal/jadwalFutsal',$data);
+		}
+		
+	}
+
 }

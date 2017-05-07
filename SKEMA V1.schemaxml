@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">db_futsal</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="tb_admin" view="colnames">
+<left>56</left>
+<top>265</top>
+<width>123</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `tb_admin` (
+  `id_admin` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_admin` varchar(50) DEFAULT NULL,
+  `no_tlp_admin` varchar(15) DEFAULT NULL,
+  `username` varchar(24) DEFAULT NULL,
+  `password` varchar(24) DEFAULT NULL,
+  PRIMARY KEY (`id_admin`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_det_sewa" view="colnames">
+<left>564</left>
+<top>53</top>
+<width>117</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `tb_det_sewa` (
+  `id_det_sewa` int(11) NOT NULL AUTO_INCREMENT,
+  `id_sewa` int(11) DEFAULT NULL,
+  `id_det_jadwal` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_det_sewa`),
+  KEY `id_sewa` (`id_sewa`),
+  KEY `id_det_jadwal` (`id_det_jadwal`),
+  CONSTRAINT `tb_det_sewa_ibfk_1` FOREIGN KEY (`id_sewa`) REFERENCES `tb_sewa` (`id_sewa`),
+  CONSTRAINT `tb_det_sewa_ibfk_2` FOREIGN KEY (`id_det_jadwal`) REFERENCES `tb_det_jadwal` (`id_det_jadwal`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_futsal" view="colnames">
+<left>537</left>
+<top>279</top>
+<width>141</width>
+<height>231</height>
+<sql_create_table>CREATE TABLE `tb_futsal` (
+  `id_futsal` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_futsal` varchar(25) DEFAULT NULL,
+  `alamat_futsal` varchar(50) DEFAULT NULL,
+  `no_hp_futsal` varchar(15) DEFAULT NULL,
+  `id_kota` int(11) DEFAULT NULL,
+  `username_futsal` varchar(25) DEFAULT NULL,
+  `password_futsal` varchar(35) DEFAULT NULL,
+  `logo_futsal` text,
+  `status` enum('PENDING','MEMBER') DEFAULT NULL,
+  PRIMARY KEY (`id_futsal`),
+  KEY `id_kota` (`id_kota`),
+  CONSTRAINT `tb_futsal_ibfk_2` FOREIGN KEY (`id_kota`) REFERENCES `td_kota` (`id_kota`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_jadwal" view="colnames">
+<left>208</left>
+<top>53</top>
+<width>123</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `tb_jadwal` (
+  `id_jadwal` int(11) NOT NULL AUTO_INCREMENT,
+  `jam_mulai` time DEFAULT NULL,
+  `jam_akhir` time DEFAULT NULL,
+  PRIMARY KEY (`id_jadwal`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_kabupaten" view="colnames">
+<left>220</left>
+<top>426</top>
+<width>145</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tb_kabupaten` (
+  `id_kabupaten` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_kabupaten` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id_kabupaten`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_lapangan" view="colnames">
+<left>241</left>
+<top>245</top>
+<width>149</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `tb_lapangan` (
+  `id_lapangan` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_lapangan` varchar(30) DEFAULT NULL,
+  `id_futsal` int(11) DEFAULT NULL,
+  `gambar_lapangan` text,
+  PRIMARY KEY (`id_lapangan`),
+  KEY `id_futsal` (`id_futsal`),
+  CONSTRAINT `tb_lapangan_ibfk_1` FOREIGN KEY (`id_futsal`) REFERENCES `tb_futsal` (`id_futsal`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_member" view="colnames">
+<left>845</left>
+<top>246</top>
+<width>136</width>
+<height>214</height>
+<sql_create_table>CREATE TABLE `tb_member` (
+  `id_member` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(25) DEFAULT NULL,
+  `last_name` varchar(25) DEFAULT NULL,
+  `no_tlp_member` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `saldo` int(11) DEFAULT NULL,
+  `profile_pict` text,
+  PRIMARY KEY (`id_member`)
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_sewa" view="colnames">
+<left>701</left>
+<top>192</top>
+<width>120</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `tb_sewa` (
+  `id_sewa` int(11) NOT NULL AUTO_INCREMENT,
+  `id_member` int(11) DEFAULT NULL,
+  `id_futsal` int(11) DEFAULT NULL,
+  `tgl_sewa` date DEFAULT NULL,
+  `total_sewa` int(11) DEFAULT NULL,
+  `status_bayar` enum('PENDING','DP') DEFAULT NULL,
+  PRIMARY KEY (`id_sewa`),
+  KEY `id_futsal` (`id_futsal`),
+  KEY `id_member` (`id_member`),
+  CONSTRAINT `tb_sewa_ibfk_2` FOREIGN KEY (`id_futsal`) REFERENCES `tb_futsal` (`id_futsal`),
+  CONSTRAINT `tb_sewa_ibfk_3` FOREIGN KEY (`id_member`) REFERENCES `tb_member` (`id_member`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_topup" view="colnames">
+<left>1005</left>
+<top>367</top>
+<width>130</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `tb_topup` (
+  `id_topup` int(11) NOT NULL AUTO_INCREMENT,
+  `id_member` int(11) DEFAULT NULL,
+  `nominal_topup` int(11) DEFAULT NULL,
+  `bukti_trans` text,
+  `status` enum('PENDING','SUKSES') DEFAULT NULL,
+  PRIMARY KEY (`id_topup`),
+  KEY `id_member` (`id_member`),
+  CONSTRAINT `tb_topup_ibfk_1` FOREIGN KEY (`id_member`) REFERENCES `tb_member` (`id_member`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="td_kota" view="colnames">
+<left>390</left>
+<top>423</top>
+<width>123</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `td_kota` (
+  `id_kota` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_kota` varchar(20) DEFAULT NULL,
+  `id_kabupaten` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_kota`),
+  KEY `id_kabupaten` (`id_kabupaten`),
+  CONSTRAINT `td_kota_ibfk_1` FOREIGN KEY (`id_kabupaten`) REFERENCES `tb_kabupaten` (`id_kabupaten`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tb_det_jadwal" view="colnames">
+<left>416</left>
+<top>19</top>
+<width>125</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `tb_det_jadwal` (
+  `id_det_jadwal` int(11) NOT NULL AUTO_INCREMENT,
+  `tanggal_jadwal` date DEFAULT NULL,
+  `id_jadwal` int(11) DEFAULT NULL,
+  `id_lapangan` int(11) DEFAULT NULL,
+  `harga_sewa` int(11) DEFAULT NULL,
+  `status` enum('BOOKED') DEFAULT NULL,
+  PRIMARY KEY (`id_det_jadwal`),
+  KEY `id_jadwal` (`id_jadwal`),
+  KEY `id_lapangan` (`id_lapangan`),
+  CONSTRAINT `tb_det_jadwal_ibfk_1` FOREIGN KEY (`id_jadwal`) REFERENCES `tb_jadwal` (`id_jadwal`),
+  CONSTRAINT `tb_det_jadwal_ibfk_2` FOREIGN KEY (`id_lapangan`) REFERENCES `tb_lapangan` (`id_lapangan`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
