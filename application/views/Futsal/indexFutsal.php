@@ -122,8 +122,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         ?>
                                                             <option value="<?php echo $id;?>"
 
-                                                                
-
                                                             > 
                                                                 <?php echo $nama;?>     
                                                             </option>

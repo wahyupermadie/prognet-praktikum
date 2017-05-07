@@ -2,7 +2,7 @@
 <?php $logo_futsal = $this->session->userdata('logo_futsal'); ?>
 <?php $nama_futsal = $this->session->userdata('nama_futsal'); ?>
 <?php $id   = $this->session->userdata('id_futsal'); ?>
-<?php $data = $this->Futsal_model->view_lapangan($id); ?>
+<?php $data = $this->Futsal_model->data_lapangan($id); ?>
 <html>
 <head>
   <meta charset="utf-8">
@@ -28,9 +28,9 @@
   <!-- jvectormap -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <!-- Date Picker -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/datepicker/datepicker3.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/daterangepicker/daterangepicker.css">
+<!--   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/datepicker/datepicker3.css">
+  Daterange picker
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/daterangepicker/daterangepicker.css"> -->
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <script src="<?php echo base_url(); ?>assets/Bootstrap/js/jquery.min.js"></script>
@@ -302,18 +302,18 @@
                   <div class="modal-body">
                     <form method="post" enctype="multipart/form-data" action="<?php echo base_url(); ?>insertlapangan">
                           <div class="form-group">
-                            Nama Lapangan
+                            <label class="sr-only">Nama Lapangan</label>>
                             <input id="addnamalapangan" class="form-control" name="addnamalapangan" placeholder="Nama Lapangan" required="required">
                           </div>
                           <div class="form-group">
                               File Gambar
                               <input type="file" class="form-control" name="file" required="required">
                           </div> 
-                    </form> 
-                  </div>
-                  <div class="modal-footer">
+                          <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" name="submit" value="submit" >Simpan</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                    </form> 
                   </div>
               </div>
             </div>
@@ -333,8 +333,8 @@
             <table class="table">
               <tr>
                 <div class="form-group">
-                  <td>Nama Barang</td>
-                  <td><input id="nama" class="form-control" name="nama" placeholder="Nama Barang" value="" required="required"> </td>
+                  <td>Nama Lapangan</td>
+                  <td><input id="nama" class="form-control" name="nama" placeholder="Nama Lapangan" value="" required="required"> </td>
                 </div>
               </tr>
             </table>
@@ -408,9 +408,9 @@
 <script src="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/knob/jquery.knob.js"></script>
 <!-- daterangepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+  <!-- <script src="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/daterangepicker/daterangepicker.js"></script>
+  datepicker
+  <script src="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/datepicker/bootstrap-datepicker.js"></script> -->
 <!-- Bootstrap WYSIHTML5 -->
 <script src="<?php echo base_url(); ?>assets/Futsal/FutsalLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <!-- Slimscroll -->

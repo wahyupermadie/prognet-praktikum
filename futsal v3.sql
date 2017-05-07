@@ -31,26 +31,6 @@ CREATE TABLE `tb_admin` (
 
 /*Data for the table `tb_admin` */
 
-/*Table structure for table `tb_det_jadwal` */
-
-DROP TABLE IF EXISTS `tb_det_jadwal`;
-
-CREATE TABLE `tb_det_jadwal` (
-  `id_det_jadwal` int(11) NOT NULL AUTO_INCREMENT,
-  `tanggal_jadwal` date DEFAULT NULL,
-  `id_jadwal` int(11) DEFAULT NULL,
-  `id_lapangan` int(11) DEFAULT NULL,
-  `harga_sewa` int(11) DEFAULT NULL,
-  `status` enum('BOOKED') DEFAULT NULL,
-  PRIMARY KEY (`id_det_jadwal`),
-  KEY `id_jadwal` (`id_jadwal`),
-  KEY `id_lapangan` (`id_lapangan`),
-  CONSTRAINT `tb_det_jadwal_ibfk_1` FOREIGN KEY (`id_jadwal`) REFERENCES `tb_jadwal` (`id_jadwal`),
-  CONSTRAINT `tb_det_jadwal_ibfk_2` FOREIGN KEY (`id_lapangan`) REFERENCES `tb_lapangan` (`id_lapangan`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `tb_det_jadwal` */
-
 /*Table structure for table `tb_det_sewa` */
 
 DROP TABLE IF EXISTS `tb_det_sewa`;
@@ -58,12 +38,12 @@ DROP TABLE IF EXISTS `tb_det_sewa`;
 CREATE TABLE `tb_det_sewa` (
   `id_det_sewa` int(11) NOT NULL AUTO_INCREMENT,
   `id_sewa` int(11) DEFAULT NULL,
-  `id_det_jadwal` int(11) DEFAULT NULL,
+  `id_jadwal` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_det_sewa`),
   KEY `id_sewa` (`id_sewa`),
-  KEY `id_det_jadwal` (`id_det_jadwal`),
+  KEY `id_jadwal` (`id_jadwal`),
   CONSTRAINT `tb_det_sewa_ibfk_1` FOREIGN KEY (`id_sewa`) REFERENCES `tb_sewa` (`id_sewa`),
-  CONSTRAINT `tb_det_sewa_ibfk_2` FOREIGN KEY (`id_det_jadwal`) REFERENCES `tb_det_jadwal` (`id_det_jadwal`)
+  CONSTRAINT `tb_det_sewa_ibfk_2` FOREIGN KEY (`id_jadwal`) REFERENCES `tb_jadwal` (`id_jadwal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_det_sewa` */
@@ -79,17 +59,15 @@ CREATE TABLE `tb_futsal` (
   `no_hp_futsal` varchar(15) DEFAULT NULL,
   `id_kota` int(11) DEFAULT NULL,
   `username_futsal` varchar(25) DEFAULT NULL,
-  `password_futsal` varchar(35) DEFAULT NULL,
+  `password_futsal` varchar(25) DEFAULT NULL,
   `logo_futsal` text,
   `status` enum('PENDING','MEMBER') DEFAULT NULL,
   PRIMARY KEY (`id_futsal`),
   KEY `id_kota` (`id_kota`),
   CONSTRAINT `tb_futsal_ibfk_2` FOREIGN KEY (`id_kota`) REFERENCES `td_kota` (`id_kota`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_futsal` */
-
-insert  into `tb_futsal`(`id_futsal`,`nama_futsal`,`alamat_futsal`,`no_hp_futsal`,`id_kota`,`username_futsal`,`password_futsal`,`logo_futsal`,`status`) values (4,'wahyu','12123adsda','123',2,'wahyu.koplar','202cb962ac59075b964b07152d234b70','default.jpg\r\n',NULL);
 
 /*Table structure for table `tb_jadwal` */
 
@@ -97,9 +75,14 @@ DROP TABLE IF EXISTS `tb_jadwal`;
 
 CREATE TABLE `tb_jadwal` (
   `id_jadwal` int(11) NOT NULL AUTO_INCREMENT,
+  `tgl_jadwal` date DEFAULT NULL,
   `jam_mulai` time DEFAULT NULL,
   `jam_akhir` time DEFAULT NULL,
-  PRIMARY KEY (`id_jadwal`)
+  `id_lapangan` int(11) DEFAULT NULL,
+  `harga_jadwal` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_jadwal`),
+  KEY `id_lapangan` (`id_lapangan`),
+  CONSTRAINT `tb_jadwal_ibfk_1` FOREIGN KEY (`id_lapangan`) REFERENCES `tb_lapangan` (`id_lapangan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_jadwal` */
@@ -112,11 +95,9 @@ CREATE TABLE `tb_kabupaten` (
   `id_kabupaten` int(11) NOT NULL AUTO_INCREMENT,
   `nama_kabupaten` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id_kabupaten`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_kabupaten` */
-
-insert  into `tb_kabupaten`(`id_kabupaten`,`nama_kabupaten`) values (1,'BULELENG');
 
 /*Table structure for table `tb_lapangan` */
 
@@ -130,11 +111,9 @@ CREATE TABLE `tb_lapangan` (
   PRIMARY KEY (`id_lapangan`),
   KEY `id_futsal` (`id_futsal`),
   CONSTRAINT `tb_lapangan_ibfk_1` FOREIGN KEY (`id_futsal`) REFERENCES `tb_futsal` (`id_futsal`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tb_lapangan` */
-
-insert  into `tb_lapangan`(`id_lapangan`,`nama_lapangan`,`id_futsal`,`gambar_lapangan`) values (4,'Lapangan 1',4,'1493742603thumb-1920-648632.png');
 
 /*Table structure for table `tb_member` */
 
@@ -204,11 +183,9 @@ CREATE TABLE `td_kota` (
   PRIMARY KEY (`id_kota`),
   KEY `id_kabupaten` (`id_kabupaten`),
   CONSTRAINT `td_kota_ibfk_1` FOREIGN KEY (`id_kabupaten`) REFERENCES `tb_kabupaten` (`id_kabupaten`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `td_kota` */
-
-insert  into `td_kota`(`id_kota`,`nama_kota`,`id_kabupaten`) values (2,'SINGARAJA',1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

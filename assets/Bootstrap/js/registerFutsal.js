@@ -17,7 +17,7 @@ $(document).ready(function(){
 					$("#registerForm")[0].reset();
 					$(".text-danger").remove();
 					$(".form-group").removeClass('has-error').removeClass('has-success');
-					// window.location.href="http://localhost/futsalv4/Member/insert_picture";// you just need to add this event on success call.
+					window.location.href="http://localhost/futsalv4/futsal/futsalAdmin";// you just need to add this event on success call.
 
 				}
 				else {

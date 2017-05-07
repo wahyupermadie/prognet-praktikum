@@ -65,6 +65,7 @@ $route['dashboardFutsal'] = 'futsal/dashboardFutsal';
 $route['loginFutsal'] = 'futsal/loginFutsal';
 $route['insertlapangan'] = 'futsal/insert_lapangan';
 $route['deletelapangan'] = 'futsal/delete_lapangan';
+$route['insertjadwal'] = 'futsal/insert_jadwal';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

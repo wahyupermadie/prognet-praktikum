@@ -25,6 +25,7 @@ class Futsal extends CI_Controller {
  		$this->load->library('session');
  		$this->load->model('Futsal_model');
 		$this->load->library('form_validation');
+		$this->load->library('pagination');
 
  	}
  	public function IndexFutsal()
@@ -146,9 +147,6 @@ class Futsal extends CI_Controller {
 		$this->load->library('upload',$config);
 		$id = $this->session->userdata('id_futsal');
 		$namalapangan = $this->input->post('addnamalapangan');
-		// $kategori = $this->input->post('kategori');
-		// $stok = $this->input->post('stok');
-		// $harga = $this->input->post('harga');
 
 		if (! $this->upload->do_upload('file'))
 		{
@@ -176,10 +174,38 @@ class Futsal extends CI_Controller {
 			redirect('../indexFutsal');}
 		else {
 			$id=$this->session->userdata('id_futsal');
-			$data['futsal']=$this->Futsal_model->data_futsal($id);
-			$this->load->view('futsal/jadwalFutsal',$data);
+			$jumlah_data= $this->Futsal_model->count_jadwal($id);
+			$data['jadwal']=$this->Futsal_model->view_jadwal_lapangan($id);
+			$this->load->library('pagination');
+			$config['base_url']= base_url().'index.php/futsal/jadwalFutsal';
+			// $config["first_url"] = base_url() .'index.php/member/search';
+			$config['total_rows']= $jumlah_data;		    
+		    $config["per_page"] = 4;
+			$config['use_page_numbers'] = TRUE;
+			$config['num_links'] = $jumlah_data;
+			$config['first_link'] ='First';
+			$config['next_link'] = 'Next';
+			$config['prev_link'] = 'Previous';
+			
+			$from = ($this->uri->segment(3));
+				$this->pagination->initialize($config);	
+				// $data['jadwal1']=$this->Futsal_model->fetch_data($config['per_page'],$from);
+				// $data['futsal']=$this->Futsal_model->data_futsal($id);
+				// $data['lapangan']=$this->Futsal_model->data_lapangan($id);
+				$this->load->view('futsal/jadwalFutsal',$data);
 		}
 		
 	}
 
+	public function insert_jadwal()
+	{
+		$data_input = array (
+ 			'tanggal_jadwal' => $this->input->post('tanggaljadwal'),
+ 			'id_jadwal' => $this->input->post('idjadwal'),
+ 			'id_lapangan' => $this->input->post('idlapangan'),
+ 			'harga_sewa' => $this->input->post('hargasewa'),
+ 			'status' => "AVAILABLE"	
+ 		);
+ 		$data = $this->Futsal_model->insert_jadwal($data_input);
+	}
 }
